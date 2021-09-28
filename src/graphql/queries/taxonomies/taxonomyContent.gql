@@ -1,0 +1,22 @@
+query($id: Mixed!, $trashed: Trashed) {
+    taxonomyContents(
+        first: 1000000
+        orderBy: { order: DESC, column: CREATED_AT }
+        trashed: $trashed
+        taxonomy: { column: ID, value: $id }
+    ) {
+        data {
+            id
+            title
+            icon
+            taxonomy {
+                id
+            }
+            parent {
+                id
+            }
+            description
+            created_at
+        }
+    }
+}

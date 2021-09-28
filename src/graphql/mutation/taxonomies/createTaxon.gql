@@ -1,0 +1,26 @@
+mutation(
+    $title: String!
+    $description: String!
+    $parentId: ID!
+    $taxonomy: ID!
+) {
+    createTaxonomyContent(
+        input: {
+            title: $title
+            description: $description
+            taxonomy: { connect: $taxonomy }
+            parent: { connect: $parentId }
+            lang: en
+        }
+    ) {
+        id
+        title
+        description
+        taxonomy {
+            type
+        }
+        parent {
+            title
+        }
+    }
+}

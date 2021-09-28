@@ -1,0 +1,14 @@
+query {
+    users(orderBy: { column: CREATED_AT, order: DESC }, trashed: ONLY) {
+        data {
+            id
+            name
+            email
+            created_at
+            phone_no
+            gender
+            phone_verified_at
+            email_verified_at
+        }
+    }
+}

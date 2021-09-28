@@ -1,0 +1,22 @@
+mutation(
+    $id: ID!
+    $title: String!
+    $description: String!
+    $price: Float!
+    $photos: [CreateAttachmentHasManyInputs]!
+) {
+    updateAd(
+        id: $id
+        input: {
+            title: $title
+            description: $description
+            price: $price
+            attachments: { connect: [12], create: $photos }
+        }
+    ) {
+        id
+        title
+        description
+        price
+    }
+}

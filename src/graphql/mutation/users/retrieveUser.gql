@@ -1,0 +1,7 @@
+mutation($id: ID!) {
+    restoreUser(id: $id) {
+        id
+        name
+        email
+    }
+}

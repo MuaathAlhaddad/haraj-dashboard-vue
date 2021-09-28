@@ -1,0 +1,6 @@
+mutation($adId: ID!) {
+    deleteAd(id: $adId) {
+        id
+        sku
+    }
+}

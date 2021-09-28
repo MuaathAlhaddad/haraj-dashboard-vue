@@ -1,0 +1,20 @@
+query {
+    reports {
+        data {
+            id
+            body
+            reportable_id
+
+            reporter {
+                id
+                name
+            }
+            reportable_type
+            reportContent {
+                id
+                body
+                type
+            }
+        }
+    }
+}

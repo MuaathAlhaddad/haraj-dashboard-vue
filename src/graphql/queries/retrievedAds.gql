@@ -1,0 +1,30 @@
+query {
+    ads(orderBy: { column: CREATED_AT, order: DESC }, trashed: ONLY) {
+        data {
+            id
+            title
+            description
+            price
+            sku
+            negotiable
+            created_at
+            taxonomyContents {
+                data {
+                    title
+                }
+            }
+            user {
+                id
+                name
+                country {
+                    code
+                    name
+                    phone_code
+                }
+                state {
+                    name
+                }
+            }
+        }
+    }
+}

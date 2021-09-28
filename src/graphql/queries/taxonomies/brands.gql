@@ -1,0 +1,14 @@
+query($catergoryName: Mixed) {
+    level1: taxonomyContent(where: { column: TITLE, value: $catergoryName }) {
+        children {
+            id
+            title
+            children {
+                title
+                children {
+                    title
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+query {
+    taxonomyContents(
+        taxonomy: { column: TYPE, value: "models" }
+        where: { column: PARENT_ID, operator: IS_NULL }
+    ) {
+        data {
+            id
+            title
+        }
+    }
+}

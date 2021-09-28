@@ -1,0 +1,36 @@
+mutation(
+    $name: String
+    # $phone_no: String
+    $email: String
+    $password: String
+    $gender: String
+    $state: ID!
+) {
+    createUser(
+        input: {
+            name: $name
+            # phone_no: $phone_no
+            email: $email
+            password: $password
+            gender: $gender
+            country: { connect: 201 }
+            state: { connect: $state }
+        }
+    ) {
+        id
+        name
+        email
+        phone_no
+        phone_verified_at
+        state {
+            id
+            name
+        }
+        country {
+            id
+            name
+        }
+        created_at
+        phone_verified_at
+    }
+}

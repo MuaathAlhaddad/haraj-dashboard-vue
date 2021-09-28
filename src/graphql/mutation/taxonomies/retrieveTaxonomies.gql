@@ -1,0 +1,7 @@
+mutation($id: ID!) {
+    restoreTaxonomyContent(id: $id) {
+        id
+        title
+        deleted_at
+    }
+}

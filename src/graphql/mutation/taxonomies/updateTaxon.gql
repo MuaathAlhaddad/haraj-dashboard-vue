@@ -1,0 +1,30 @@
+mutation(
+    $id: ID!
+    $title: String!
+    $description: String!
+    $taxonId: ID!
+    $parentId: ID!
+) {
+    updateTaxonomyContent(
+        id: $id
+        input: {
+            title: $title
+            description: $description
+            taxonomy: { connect: $taxonId }
+            parent: { connect: $parentId }
+            # lang: ar
+        }
+    ) {
+        id
+        title
+        description
+        parent {
+            id
+            title
+        }
+        taxonomy {
+            id
+            type
+        }
+    }
+}

@@ -1,0 +1,55 @@
+query {
+    ads(orderBy: { column: CREATED_AT, order: DESC }) {
+        data {
+            id
+            title
+            description
+            price
+            sku
+            negotiable
+            created_at
+            taxonomyContents {
+                data {
+                    id
+                    title
+                }
+            }
+            user {
+                id
+                name
+                country {
+                    id
+                    code
+                    name
+                    phone_code
+                }
+                state {
+                    id
+                    name
+                }
+            }
+            attachments {
+                data {
+                    id
+                    path
+                    attachable_id
+                    attachable_type
+                    type
+                    disk_name
+                    file_name
+                    thumbnail
+                }
+            }
+            comments {
+                data {
+                    id
+                    body
+                    user {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }
+}
