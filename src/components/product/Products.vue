@@ -50,11 +50,11 @@
                       <!-- <td><img v-bind:src="'/' + product.photo" width="100" alt="product"></td> -->
                       <td>
                         <a href="#" @click="editAd(ad)">
-                          Edit
+                          <i class="fa fa-edit"></i>
                         </a>
 
                         <a href="#" @click="deleteAd(ad.id)">
-                          Delete
+                          <i class="fa fa-trash"></i>
                         </a>
                       </td>
                     </tr>
@@ -554,6 +554,10 @@ export default {
                   centered: true,
                 })
                 .then((value) => {
+                  this.editmode = true;
+                  this.create_updateSwitcher = false;
+                  this.$apollo.queries.ads.refetch();
+
                   this.boxTwo = value;
                 })
                 .catch(() => {});
@@ -594,6 +598,31 @@ export default {
           "warning"
         );
       } else {
+        // this.form.taxonomyContents = [];
+        // if (this.form.category != null) {
+        //     const category = this.harajs.taxonomyContents.data.find(
+        //         element => element.title == this.form.category
+        //     );
+        //     this.form.taxonomyContents.push(category.id);
+        // }
+        // if (this.form.brand != null) {
+        //     const brand = this.brandsObjects.level1.children.find(
+        //         element => element.title == this.form.brand
+        //     );
+        //     this.form.taxonomyContents.push(brand.id);
+        // }
+        // if (this.form.model != null) {
+        //     const model = this.modelsObjects.level2.children.find(
+        //         element => element.title == this.form.model
+        //     );
+        //     this.form.taxonomyContents.push(model.id);
+        // }
+        // if (this.form.year != null) {
+        //     const year = this.yearsObjects.taxonomyContents.data.find(
+        //         element => element.title == this.form.year
+        //     );
+        //     this.form.taxonomyContents.push(year.id);
+        // }
         this.$apollo
           .mutate({
             // Query

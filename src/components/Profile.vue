@@ -118,6 +118,7 @@
     export default {
         data(){
             return {
+                 // eslint-disable-next-line no-undef
                  form: new Form({
                     id:'',
                     name : '',
@@ -140,14 +141,16 @@
                 this.form.put('api/profile')
                 .then((data)=>{
                     this.$Progress.finish();
+                    // eslint-disable-next-line no-undef
                     Toast.fire({
                         icon: 'success',
                         title: data.data.message
                     });
                 })
-                .catch((data) => {
+                .catch(() => {
                     this.$Progress.fail();
 
+                    // eslint-disable-next-line no-undef
                     Toast.fire({
                         icon: 'error',
                         title: 'Some error occured! Please try again'
@@ -165,6 +168,7 @@
                     this.form.new_password = '';
                     this.form.confirm_password = '';
 
+                    // eslint-disable-next-line no-undef
                     Toast.fire({
                         icon: 'success',
                         title: data.data.message
@@ -173,6 +177,7 @@
                 .catch(() => {
                     this.$Progress.fail();
 
+                    // eslint-disable-next-line no-undef
                     Toast.fire({
                         icon: 'error',
                         title: 'Some error occured! Please try again'
@@ -185,6 +190,7 @@
 
             this.$Progress.start();
 
+            // eslint-disable-next-line no-undef
             axios.get("api/profile")
             .then(({ data }) => (this.form.fill(data.data)));
             
