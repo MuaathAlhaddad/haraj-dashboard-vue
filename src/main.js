@@ -4,7 +4,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -14,9 +13,7 @@ import moment from 'moment';
 
 import { Form, HasError, AlertError } from 'vform';
 window.Form = Form;
-
-import Gate from "./Gate";
-Vue.prototype.$gate = new Gate(window.user);
+ 
 
 import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.css'
