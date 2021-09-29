@@ -84,6 +84,7 @@ import AllReports from "../../graphql/queries/allReports.gql";
 
 export default {
     components: {
+        // eslint-disable-next-line vue/no-unused-components
         SearchAds,
         LoadingIcon
     },

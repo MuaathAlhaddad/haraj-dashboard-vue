@@ -80,6 +80,7 @@
         data () {
             return {
               tags : {},
+              // eslint-disable-next-line no-undef
               form: new Form({
                   id : '',
                   name: '',
@@ -88,19 +89,17 @@
         },
         methods: {
 
-          loadTags(){
-            // if(this.$gate.isAdmin()){
-              axios.get("api/tags").then(({ data }) => (this.tags = data.data));
-            // }
-          },
+ 
           
           createTag(){
               this.$Progress.start();
 
               this.form.post('api/tags')
               .then((data)=>{
+                  // eslint-disable-next-line no-undef
                   $('#addNew').modal('hide');
 
+                  // eslint-disable-next-line no-undef
                   Toast.fire({
                         icon: 'success',
                         title: data.data.message
@@ -111,6 +110,7 @@
               })
               .catch(()=>{
 
+                  // eslint-disable-next-line no-undef
                   Toast.fire({
                       icon: 'error',
                       title: 'Some error occured! Please try again'

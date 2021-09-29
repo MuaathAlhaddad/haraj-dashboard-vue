@@ -19,8 +19,17 @@ import Gate from "./Gate";
 Vue.prototype.$gate = new Gate(window.user);
 
 import Swal from 'sweetalert2';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
+import { faVuejs } from '@fortawesome/free-brands-svg-icons';
 
+library.add(faVuejs)
 
+library.add(fas)
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -72,23 +81,23 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 
 Vue.component(
-    'passport-clients',
-    require('./components/passport/Clients.vue').default
+  'passport-clients',
+  require('./components/passport/Clients.vue').default
 );
 
 Vue.component(
-    'passport-authorized-clients',
-    require('./components/passport/AuthorizedClients.vue').default
+  'passport-authorized-clients',
+  require('./components/passport/AuthorizedClients.vue').default
 );
 
 Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue').default
+  'passport-personal-access-tokens',
+  require('./components/passport/PersonalAccessTokens.vue').default
 );
 
 Vue.component(
-    'not-found',
-    require('./components/NotFound.vue').default
+  'not-found',
+  require('./components/NotFound.vue').default
 );
 
 // Filter Section

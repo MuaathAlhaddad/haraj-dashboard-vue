@@ -78,6 +78,7 @@ import Ads from "../../graphql/queries/retrievedAds.gql";
 import RetrieveAd from "../../graphql/mutation/ads/retrieveAd.gql";
 export default {
     components: {
+        // eslint-disable-next-line vue/no-unused-components
         VueTagsInput,
         SearchAds,
         LoadingIcon
@@ -104,6 +105,7 @@ export default {
             categories: [],
             brands: [],
             models: [],
+            // eslint-disable-next-line no-undef
             form: new Form({
                 id: "",
                 name: "",
@@ -120,6 +122,7 @@ export default {
                 price: null,
                 photoUrl: ""
             }),
+            // eslint-disable-next-line no-undef
             adForm: new Form({
                 title: "",
                 description: "",
@@ -151,6 +154,7 @@ export default {
         },
 
         retrieveAd(id) {
+            // eslint-disable-next-line no-undef
             Swal.fire({
                 title: "Are you sure?",
                 text: "You will retrieve this!",
@@ -168,7 +172,8 @@ export default {
                                 id: id
                             }
                         })
-                        .then(data => {
+                        .then(() => {
+                            // eslint-disable-next-line no-undef
                             Swal.fire(
                                 "Deleted!",
                                 "Your file has been deleted.",
@@ -178,6 +183,7 @@ export default {
                         })
                         .catch(errors => {
                             console.log(errors);
+                            // eslint-disable-next-line no-undef
                             Swal.fire("Failed!", data.message, "warning");
                         });
                 }
