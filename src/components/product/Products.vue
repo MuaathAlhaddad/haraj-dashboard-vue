@@ -107,10 +107,12 @@
                 v-if="editmode == false"
               >
                 <b-form-select
-                  id="input-1"
-                  v-model="form.category"
+                  id="example-input-1"
+                  name="example-input-1"
+                  v-model="$v.form.category.$model"
                   :options="categories"
-                  required
+                  :state="validateState('category')"
+                  aria-describedby="input-1-live-feedback"
                 ></b-form-select>
               </b-form-group>
               <b-form-group label="Brands:" v-if="switchBrands">
@@ -138,34 +140,40 @@
                   :options="yearsArray"
                 ></b-form-select>
               </b-form-group>
-              <div class="form-group">
-                <label>Title</label>
-                <input
-                  v-model="form.title"
-                  type="text"
+              <b-form-group
+                id="input-group-2"
+                label="Ad Title:"
+                label-for="input-2"
+              >
+                <b-form-input
+                  id="title"
                   name="title"
-                  class="form-control"
-                  :class="{
-                    'is-invalid': form.errors.has('title'),
-                  }"
-                  required
-                />
-                <has-error :form="form" field="title"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Description</label>
-                <input
-                  v-model="form.description"
                   type="text"
+                  v-model="$v.form.title.$model"
+                  :state="validateState('title')"
+                  aria-describedby="input-2-live-feedback"
+                ></b-form-input
+                ><b-form-invalid-feedback id="input-2-live-feedback">
+                  This is a required field!
+                </b-form-invalid-feedback>
+              </b-form-group>
+              <b-form-group
+                id="input-group-3"
+                label="Description:"
+                label-for="input-3"
+              >
+                <b-form-textarea
                   name="description"
-                  class="form-control"
-                  :class="{
-                    'is-invalid': form.errors.has('description'),
-                  }"
-                  required
-                />
-                <has-error :form="form" field="description"></has-error>
-              </div>
+                  v-model="$v.form.description.$model"
+                  :state="validateState('description')"
+                  aria-describedby="input-3-live-feedback"
+                ></b-form-textarea>
+                <b-form-invalid-feedback id="input-3-live-feedback">
+                  This is a required field!
+                </b-form-invalid-feedback>
+              </b-form-group>
+              <label for="price">Price</label>
+
               <b-input-group class="mb-2">
                 <b-input-group-prepend is-text>
                   <small class="secondaryColor">
@@ -173,19 +181,24 @@
                   </small>
                 </b-input-group-prepend>
                 <b-form-input
+                  id="price"
+                  name="price"
                   type="number"
-                  placeholder="$100"
-                  id="input-4"
-                  v-model="form.price"
-                  required
-                ></b-form-input>
+                  v-model="$v.form.price.$model"
+                  :state="validateState('price')"
+                  aria-describedby="input-4-live-feedback"
+                >
+                </b-form-input>
+
                 <b-input-group-prepend is-text>
                   Negotiable
                   <b-form-checkbox class="ml-1" v-model="form.negotiable">
                   </b-form-checkbox>
                 </b-input-group-prepend>
+                <b-form-invalid-feedback id="input-4-live-feedback">
+                  This is a required field!
+                </b-form-invalid-feedback>
               </b-input-group>
-
               <b-form-group
                 id="input-group-5"
                 label="City:"
@@ -193,10 +206,12 @@
                 v-if="editmode == false"
               >
                 <b-form-select
-                  id="input-1"
-                  v-model="form.city"
+                  id="example-input-5"
+                  name="example-input-5"
+                  v-model="$v.form.city.$model"
                   :options="citiesArray"
-                  required
+                  :state="validateState('city')"
+                  aria-describedby="input-5-live-feedback"
                 >
                 </b-form-select>
               </b-form-group>
@@ -266,17 +281,44 @@ import Years from "../../graphql/queries/taxonomies/years.gql";
 import Cities from "../../graphql/queries/cities.gql";
 import VueUploadMultipleImage from "vue-upload-multiple-image";
 
+///Validation
+import { validationMixin } from "vuelidate";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 /// Mutations
 import CreateAd from "../../graphql/mutation/ads/createAd.gql";
 import UpdateAd from "../../graphql/mutation/ads/updateAd.gql";
 import DeleteAd from "../../graphql/mutation/ads/deleteAd.gql";
 
 export default {
+  mixins: [validationMixin],
   components: {
     VueTagsInput,
     SearchAds,
     LoadingIcon,
     VueUploadMultipleImage,
+  },
+  validations: {
+    form: {
+      category: {
+        required,
+      },
+
+      title: {
+        required,
+        minLength: minLength(5),
+        maxLength: maxLength(50),
+      },
+      description: {
+        minLength: minLength(10),
+        maxLength: maxLength(1000),
+        required,
+      },
+      price: { minLength: minLength(1), maxLength: maxLength(10), required },
+
+      city: {
+        required,
+      },
+    },
   },
   data() {
     return {
@@ -448,6 +490,10 @@ export default {
     },
   },
   methods: {
+    validateState(value) {
+      const { $dirty, $error } = this.$v.form[value];
+      return $dirty ? !$error : null;
+    },
     ///Uploading and Edit photos
     uploadImageSuccess(formData, index, fileList) {
       this.fileList = fileList;
@@ -483,6 +529,10 @@ export default {
     },
 
     createAd() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
+        return;
+      }
       if (this.fileList != null) {
         for (let index = 0; index < this.fileList.length; index++) {
           let photo = new Object();
@@ -577,6 +627,10 @@ export default {
       }
     },
     updateAd() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
+        return;
+      }
       if (this.fileList !== null) {
         for (let index = 0; index < this.fileList.length; index++) {
           let photo = new Object();

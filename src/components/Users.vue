@@ -112,61 +112,107 @@
                   >Back</b-button
                 >
               </b-form-group>
-              <div class="form-group">
-                <label>Name</label>
-                <input
-                  v-model="form.name"
-                  type="text"
-                  name="name"
-                  class="form-control"
-                  :class="{
-                    'is-invalid': form.errors.has('name'),
-                  }"
-                />
-                <has-error :form="form" field="name"></has-error>
-              </div>
-              <div class="form-group">
-                <label>Email</label>
-                <input
-                  v-model="form.email"
-                  type="text"
-                  name="email"
-                  class="form-control"
-                  :class="{
-                    'is-invalid': form.errors.has('email'),
-                  }"
-                />
-                <has-error :form="form" field="email"></has-error>
-              </div>
+              <b-form-group id="name" label="Name" label-for="name">
+                <b-input-group class="mb-2">
+                  <b-form-input
+                    id="name"
+                    name="name"
+                    type="text"
+                    v-model="$v.form.name.$model"
+                    :state="validateState('name')"
+                    aria-describedby="input-1-live-feedback"
+                  >
+                  </b-form-input>
+                </b-input-group>
+
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  This is a required field and must be characters.
+                </b-form-invalid-feedback>
+              </b-form-group>
+              <b-form-group id="email" label="Email" label-for="email">
+                <b-input-group class="mb-2">
+                  <b-input-group-prepend is-text>
+                    <b-icon icon="envelope-fill"></b-icon>
+                  </b-input-group-prepend>
+                  <b-form-input
+                    id="email"
+                    name="email"
+                    type="email"
+                    v-model="$v.form.email.$model"
+                    :state="validateState('email')"
+                    aria-describedby="input-2-live-feedback"
+                  >
+                  </b-form-input>
+                </b-input-group>
+
+                <b-form-invalid-feedback id="input-2-live-feedback">
+                  This is a required field and must be email!.
+                </b-form-invalid-feedback>
+              </b-form-group>
               <b-form-group id="phone" label="Phone" label-for="phone">
                 <b-input-group class="mb-2">
                   <b-input-group-prepend is-text>
                     +60
                   </b-input-group-prepend>
                   <b-form-input
-                    id="phone"
+                    id="phone_no"
                     name="phone_no"
                     type="number"
-                    v-model="form.phone_no"
+                    v-model="$v.form.phone_no.$model"
+                    :state="validateState('phone_no')"
+                    aria-describedby="input-1-live-feedback"
                   >
                   </b-form-input>
                 </b-input-group>
-              </b-form-group>
 
-              <div class="form-group">
-                <label>Password</label>
-                <input
-                  v-model="form.password"
-                  type="password"
-                  name="password"
-                  class="form-control"
-                  :class="{
-                    'is-invalid': form.errors.has('password'),
-                  }"
-                  autocomplete="false"
-                />
-                <has-error :form="form" field="password"></has-error>
-              </div>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  This is a required field and must be number! characters.
+                </b-form-invalid-feedback>
+              </b-form-group>
+              <b-form-group id="password" label="Password" label-for="password">
+                <b-input-group class="mb-2">
+                  <b-input-group-prepend is-text>
+                    <b-icon icon="key-fill"></b-icon>
+                  </b-input-group-prepend>
+                  <b-form-input
+                    id="password"
+                    name="password"
+                    type="password"
+                    v-model="$v.form.password.$model"
+                    :state="validateState('password')"
+                    aria-describedby="input-3-live-feedback"
+                  >
+                  </b-form-input>
+                </b-input-group>
+
+                <b-form-invalid-feedback id="input-3-live-feedback">
+                  This is a required!.
+                </b-form-invalid-feedback>
+              </b-form-group>
+              <b-form-group
+                id="repeatPassword"
+                label="Repeat Password"
+                label-for="repeatPassword"
+              >
+                <b-input-group class="mb-2">
+                  <b-input-group-prepend is-text>
+                    <b-icon icon="key-fill"></b-icon>
+                  </b-input-group-prepend>
+                  <b-form-input
+                    id="repeatPassword"
+                    name="repeatPassword"
+                    type="password"
+                    v-model="$v.form.repeatPassword.$model"
+                    :state="validateState('repeatPassword')"
+                    aria-describedby="input-4-live-feedback"
+                  >
+                  </b-form-input>
+                </b-input-group>
+
+                <b-form-invalid-feedback id="input-4-live-feedback">
+                  This is a required!.
+                </b-form-invalid-feedback>
+              </b-form-group>
 
               <b-form-group
                 id="example-input-group-5"
@@ -176,11 +222,15 @@
                 <b-form-select
                   id="example-input-5"
                   name="example-input-5"
-                  v-model="form.gender"
+                  v-model="$v.form.gender.$model"
                   :options="genders"
-                  required
+                  :state="validateState('gender')"
+                  aria-describedby="input-5-live-feedback"
+                ></b-form-select>
+
+                <b-form-invalid-feedback id="input-5-live-feedback"
+                  >This is a required field.</b-form-invalid-feedback
                 >
-                </b-form-select>
               </b-form-group>
               <b-form-group
                 id="example-input-group-6"
@@ -190,11 +240,17 @@
                 <b-form-select
                   id="example-input-6"
                   name="example-input-6"
-                  v-model="form.state"
+                  v-model="$v.form.state.$model"
                   :options="statesArray"
-                  required
+                  :state="validateState('state')"
+                  aria-describedby="input-6-live-feedback"
                 ></b-form-select>
+
+                <b-form-invalid-feedback id="input-6-live-feedback"
+                  >This is a required field.</b-form-invalid-feedback
+                >
               </b-form-group>
+
               <div class="form-group">
                 <label>User Role</label>
                 <select
@@ -243,9 +299,47 @@ import CreateUser from "../graphql/mutation/users/createUser.gql";
 import UpdateUser from "../graphql/mutation/users/updateUser.gql";
 import Cities from "../graphql/queries/cities.gql";
 import DeleteUser from "../graphql/mutation/users/deleteUser.gql";
-
+import { validationMixin } from "vuelidate";
+import {
+  required,
+  minLength,
+  maxLength,
+  sameAs,
+  email,
+} from "vuelidate/lib/validators";
 export default {
+  mixins: [validationMixin],
   components: { SearchUsers, LoadingIcon },
+  validations: {
+    form: {
+      name: {
+        required,
+        minLength: minLength(5),
+      },
+      email: {
+        required,
+        email,
+      },
+      phone_no: {
+        required,
+        minLength: minLength(9),
+        maxLength: maxLength(12),
+      },
+      password: {
+        required,
+        minLength: minLength(6),
+      },
+      repeatPassword: {
+        sameAsPassword: sameAs("password"),
+      },
+      gender: {
+        required,
+      },
+      state: {
+        required,
+      },
+    },
+  },
   data() {
     return {
       genders: [
@@ -266,6 +360,7 @@ export default {
         type: "",
         phone_no: null,
         name: "",
+        repeatPassword: "",
         email: "",
         gender: "",
         password: "",
@@ -299,6 +394,10 @@ export default {
     },
   },
   methods: {
+    validateState(value) {
+      const { $dirty, $error } = this.$v.form[value];
+      return $dirty ? !$error : null;
+    },
     edit_create() {
       this.editmode = false;
       this.form.reset();
@@ -309,6 +408,10 @@ export default {
     },
 
     createNewUser() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
+        return;
+      }
       const stateID = this.states.country.states.find(
         (element) => element.name == this.form.state
       );
@@ -350,17 +453,22 @@ export default {
           let { graphQLErrors } = errors;
           if (graphQLErrors[0].extensions.category === "validation") {
             // eslint-disable-next-line no-undef
-            $("#addNew").modal("hide");
-            // eslint-disable-next-line no-undef
-            Toast.fire({
-              icon: "error",
-              title: "Validation Error! Please try again",
-            });
+            // $("#addNew").modal("hide");
+            // // eslint-disable-next-line no-undef
+            // Toast.fire({
+            //   icon: "error",
+            //   title: "Validation Error! Please try again",
+            // });
+            console.log(errors);
             this.create_updateSwitcher = false;
           }
         });
     },
     updateNewUser() {
+      this.$v.form.$touch();
+      if (this.$v.form.$anyError) {
+        return;
+      }
       const stateID = this.states.country.states.find(
         (element) => element.name == this.form.state
       );

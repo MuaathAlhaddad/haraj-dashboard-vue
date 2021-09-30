@@ -1,36 +1,33 @@
 mutation(
-    $name: String
-    $userId: ID!
-    $email: String
-    $password: String
-    $gender: String
-    $state: ID!
+  $userId: ID!
+  $name: String!
+  $email: String!
+  $password: String!
+  $gender: String!
+  $state: ID!
 ) {
-    updateUser(
-        input: {
-            name: $name
-            id:$userId
-            email: $email
-            password: $password
-            gender: $gender
-            country: { connect: 201 }
-            state: { connect: $state }
-        }
-    ) {
-        id
-        name
-        email
-        phone_no
-        phone_verified_at
-        state {
-            id
-            name
-        }
-        country {
-            id
-            name
-        }
-        created_at
-        phone_verified_at
+  updateUser(
+    input: {
+      id: $userId
+      name: $name
+      gender: $gender
+      email: $email
+      password: $password
+      country: { connect: 3 }
+      state: { connect: $state }
     }
+  ) {
+    id
+    name
+    email
+    attachments {
+      data {
+        id
+        attachable_id
+        attachable_type
+        type
+        path
+      }
+    }
+  }
 }
