@@ -55,23 +55,11 @@
                   </tbody>
                 </table>
               </div>
-              <!-- /.card-body -->
-              <!-- <div class="card-footer">
-                                <pagination
-                                    :data="categories"
-                                    @pagination-change-page="getResults"
-                                ></pagination>
-                            </div> -->
             </div>
             <!-- /.card -->
           </div>
         </div>
 
-        <!-- <div v-if="!$gate.isAdmin()">
-          <not-found></not-found>
-        </div> -->
-
-        <!-- Modal -->
         <div
           class="modal fade"
           id="addNew"
@@ -80,7 +68,7 @@
           aria-labelledby="addNew"
           aria-hidden="true"
         >
-          <div class="modal-dialog" role="document">
+          <b-modal ref="my-modal" hide-footer>
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" v-show="!editmode">
@@ -147,6 +135,7 @@
                     type="button"
                     class="btn btn-secondary"
                     data-dismiss="modal"
+                    @click="hideModal"
                   >
                     Close
                   </button>
@@ -167,11 +156,10 @@
                 </div>
               </form>
             </div>
-          </div>
+          </b-modal>
         </div>
       </div>
     </template>
-    {{ harajs }}
   </section>
 </template>
 
@@ -229,6 +217,9 @@ export default {
   },
 
   methods: {
+    hideModal() {
+      this.$refs["my-modal"].hide();
+    },
     addNewBrand() {
       if (this.form.haraj != null) {
         const haraj = this.harajs.find(
@@ -249,7 +240,6 @@ export default {
           })
           .then(() => {
             // eslint-disable-next-line no-undef
-            $("#addNew").modal("hide");
             // eslint-disable-next-line no-undef
             Toast.fire({
               icon: "success",
@@ -291,9 +281,6 @@ export default {
           })
           .then(() => {
             // eslint-disable-next-line no-undef
-            $("#addNew").modal("hide");
-
-            // eslint-disable-next-line no-undef
             Toast.fire({
               icon: "success",
               title: "Brand has been Updated!!",
@@ -324,9 +311,6 @@ export default {
         })
         .then(() => {
           // eslint-disable-next-line no-undef
-          $("#addNew").modal("hide");
-
-          // eslint-disable-next-line no-undef
           Toast.fire({
             icon: "success",
             title: "Brand has been Delete!!",
@@ -352,14 +336,14 @@ export default {
       this.editmode = true;
       this.form.reset();
       // eslint-disable-next-line no-undef
-      $("#addNew").modal("show");
+      this.$refs["my-modal"].show();
       this.form.fill(brand);
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
       // eslint-disable-next-line no-undef
-      $("#addNew").modal("show");
+      this.$refs["my-modal"].show();
     },
   },
   mounted() {

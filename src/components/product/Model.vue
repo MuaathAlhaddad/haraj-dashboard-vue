@@ -83,7 +83,7 @@
           aria-labelledby="addNew"
           aria-hidden="true"
         >
-          <div class="modal-dialog" role="document">
+          <b-modal ref="my-modal" hide-footer>
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" v-show="!editmode">
@@ -149,6 +149,7 @@
                     type="button"
                     class="btn btn-secondary"
                     data-dismiss="modal"
+                    @click="hideModal"
                   >
                     Close
                   </button>
@@ -169,7 +170,7 @@
                 </div>
               </form>
             </div>
-          </div>
+          </b-modal>
         </div>
       </div>
     </template>
@@ -235,6 +236,9 @@ export default {
   },
 
   methods: {
+    hideModal() {
+      this.$refs["my-modal"].hide();
+    },
     addNewType() {
       if (this.form.type != null) {
         const type = this.types.find(
@@ -254,8 +258,6 @@ export default {
             },
           })
           .then(() => {
-            // eslint-disable-next-line no-undef
-            $("#addNew").modal("hide");
             // eslint-disable-next-line no-undef
             Toast.fire({
               icon: "success",
@@ -297,9 +299,6 @@ export default {
           })
           .then(() => {
             // eslint-disable-next-line no-undef
-            $("#addNew").modal("hide");
-
-            // eslint-disable-next-line no-undef
             Toast.fire({
               icon: "success",
               title: "Model has been Updated!!",
@@ -330,9 +329,6 @@ export default {
         })
         .then(() => {
           // eslint-disable-next-line no-undef
-          $("#addNew").modal("hide");
-
-          // eslint-disable-next-line no-undef
           Toast.fire({
             icon: "success",
             title: "Model has been Delete!!",
@@ -358,14 +354,14 @@ export default {
       this.editmode = true;
       this.form.reset();
       // eslint-disable-next-line no-undef
-      $("#addNew").modal("show");
+      this.$refs["my-modal"].show();
       this.form.fill(model);
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
       // eslint-disable-next-line no-undef
-      $("#addNew").modal("show");
+      this.$refs["my-modal"].show();
     },
   },
   mounted() {

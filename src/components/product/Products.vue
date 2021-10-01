@@ -614,7 +614,6 @@ export default {
             })
             .catch((errors) => {
               console.log(errors);
-              this.$Progress.fail();
             });
         }
       } else {

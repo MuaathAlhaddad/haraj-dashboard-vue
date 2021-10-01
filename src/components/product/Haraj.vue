@@ -55,32 +55,15 @@
                   </tbody>
                 </table>
               </div>
-              <!-- /.card-body -->
-              <!-- <div class="card-footer">
-                                <pagination
-                                    :data="categories"
-                                    @pagination-change-page="getResults"
-                                ></pagination>
-                            </div> -->
+       
             </div>
             <!-- /.card -->
           </div>
         </div>
-        <!-- 
-        <div v-if="!$gate.isAdmin()">
-          <not-found></not-found>
-        </div> -->
 
         <!-- Modal -->
-        <div
-          class="modal fade"
-          id="addNew"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="addNew"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog" role="document">
+        <b-modal ref="my-modal" hide-footer>
+          <div>
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" v-show="!editmode">
@@ -100,7 +83,6 @@
               </div>
 
               <!-- <form @submit.prevent="createUser"> -->
-
               <form @submit.prevent="editmode ? updateHaraj() : addNewHaraj()">
                 <div class="modal-body">
                   <div class="form-group">
@@ -151,6 +133,7 @@
                     type="button"
                     class="btn btn-secondary"
                     data-dismiss="modal"
+                    @click="hideModal"
                   >
                     Close
                   </button>
@@ -172,7 +155,15 @@
               </form>
             </div>
           </div>
-        </div>
+        </b-modal>
+        <div
+          class="modal fade"
+          id="addNew"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="addNew"
+          aria-hidden="true"
+        ></div>
       </div>
     </template>
   </section>
@@ -216,6 +207,9 @@ export default {
   },
 
   methods: {
+    hideModal() {
+      this.$refs["my-modal"].hide();
+    },
     addNewHaraj() {
       this.$apollo
         .mutate({
@@ -229,9 +223,6 @@ export default {
           },
         })
         .then(() => {
-          // eslint-disable-next-line no-undef
-          $("#addNew").modal("hide");
-
           // eslint-disable-next-line no-undef
           Toast.fire({
             icon: "success",
@@ -268,7 +259,6 @@ export default {
         })
         .then(() => {
           // eslint-disable-next-line no-undef
-          $("#addNew").modal("hide");
 
           // eslint-disable-next-line no-undef
           Toast.fire({
@@ -300,7 +290,6 @@ export default {
         })
         .then(() => {
           // eslint-disable-next-line no-undef
-          $("#addNew").modal("hide");
           // eslint-disable-next-line no-undef
           Toast.fire({
             icon: "success",
@@ -328,14 +317,13 @@ export default {
       this.editmode = true;
       this.form.reset();
       // eslint-disable-next-line no-undef
-      $("#addNew").modal("show");
+      this.$refs["my-modal"].show();
       this.form.fill(haraj);
     },
     newModal() {
       this.editmode = false;
       this.form.reset();
-      // eslint-disable-next-line no-undef
-      $("#addNew").modal("show");
+      this.$refs["my-modal"].show();
     },
   },
   mounted() {
