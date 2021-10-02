@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-global.jQuery = require('jquery');
-var $ = global.jQuery;
-window.$ = $;
+// global.jQuery = require('jquery');
+// let $ = global.jQuery;
+// window.$ = $;
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -80,20 +80,20 @@ const router = new VueRouter({
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 
-Vue.component(
-  'passport-clients',
-  require('./components/passport/Clients.vue').default
-);
+// Vue.component(
+//   'passport-clients',
+//   require('./components/passport/Clients.vue').default
+// );
+//
+// Vue.component(
+//   'passport-authorized-clients',
+//   require('./components/passport/AuthorizedClients.vue').default
+// );
 
-Vue.component(
-  'passport-authorized-clients',
-  require('./components/passport/AuthorizedClients.vue').default
-);
-
-Vue.component(
-  'passport-personal-access-tokens',
-  require('./components/passport/PersonalAccessTokens.vue').default
-);
+// Vue.component(
+//   'passport-personal-access-tokens',
+//   require('./components/passport/PersonalAccessTokens.vue').default
+// );
 
 Vue.component(
   'not-found',

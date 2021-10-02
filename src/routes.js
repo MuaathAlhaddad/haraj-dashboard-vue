@@ -1,8 +1,7 @@
 export default [
-    { path: '/dashboard', component: require('./components/Dashboard.vue').default },
+    { path: '/', component: require('./components/Dashboard.vue').default },
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '/developer', component: require('./components/Developer.vue').default },
-    { path: '/test', component: require('./components/Test.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
     { path: '/ads', component: require('./components/product/Products.vue').default },
     { path: '/ads/tag', component: require('./components/product/Tag.vue').default },
