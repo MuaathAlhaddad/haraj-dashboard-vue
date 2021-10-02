@@ -4,7 +4,7 @@ export default [
         component: require('./components/auth/SignIn.vue').default
     },
     {
-        path: '/dashboard', component: require('./components/Dashboard.vue').default,
+        path: '/', component: require('./components/Dashboard.vue').default,
         meta: {
             requiresAuth: true
         }
@@ -19,11 +19,7 @@ export default [
             requiresAuth: true
         }
     },
-    {
-        path: '/test', component: require('./components/Test.vue').default, meta: {
-            requiresAuth: true
-        }
-    },
+
     {
         path: '/users', component: require('./components/Users.vue').default, meta: {
             requiresAuth: true
