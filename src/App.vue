@@ -1,25 +1,53 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-    <!-- <Sidebar /> -->
+    <template v-if="loading">
+      <div>
+        <loading-icon />
+      </div>
+    </template>
+    <template v-else>
+      <router-view></router-view>
+      <!-- <Sidebar /> -->
+    </template>
   </div>
 </template>
 
 <script>
-// import Sidebar from "./layout/Sidebar.vue";
+import CurrnetUser from "./graphql/currentUser.gql";
+import { mapActions } from "vuex";
+import LoadingIcon from "./components/LoadingIcon.vue";
+const userDetails = CurrnetUser;
+
 export default {
+  components: { LoadingIcon },
   // components: { Sidebar },
   name: "App",
+  data() {
+    return { loading: 0, skiped: true, userId: null };
+  },
+  methods: {
+    ...mapActions({
+      currentUser: "Auth/currentUser",
+    }),
+  },
+  apollo: {
+    currentUserDetails: {
+      query: userDetails,
+      loadingKey: "loading",
+
+      update(data) {
+        if (data.currentUser == null) {
+          return this.currentUser(null);
+        }
+
+        this.currentUser(data.currentUser);
+        this.userId = data.currentUser.id;
+        this.skiped = false;
+        return data;
+      },
+    },
+  },
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>

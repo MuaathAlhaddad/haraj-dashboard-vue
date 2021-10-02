@@ -184,6 +184,7 @@ import createType from "../../graphql/mutation/taxonomies/createTaxon.gql";
 import Taxonomies from "../../graphql/queries/taxonomies/taxonomyContent.gql";
 import updateType from "../../graphql/mutation/taxonomies/updateTaxon.gql";
 import deleteType from "../../graphql/mutation/taxonomies/deleteTaxon.gql";
+import store from "../../store/Auth";
 
 export default {
   data() {
@@ -203,6 +204,12 @@ export default {
         brand: null,
       }),
     };
+  },  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     types: {

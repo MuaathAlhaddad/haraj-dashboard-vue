@@ -1,0 +1,112 @@
+query {
+  currentUser {
+    id
+    name
+    email
+    phone_no
+    gender
+    state {
+      id
+      name
+    }
+    attachments {
+      data {
+        id
+        path
+      }
+    }
+    ads {
+      data {
+        id
+        title
+        description
+        price
+        sku
+        negotiable
+        created_at
+        user {
+          id
+          name
+          country {
+            id
+            code
+            name
+            phone_code
+          }
+          state {
+            id
+            name
+          }
+        }
+
+        comments {
+          data {
+            id
+            body
+            user {
+              id
+              name
+            }
+          }
+        }
+        attachments {
+          data {
+            id
+            path
+            attachable_id
+            attachable_type
+            type
+            disk_name
+            file_name
+            thumbnail
+          }
+        }
+        # reports {
+        #   data {
+        #     name
+        #     type
+        #     created_at
+        #   }
+        # }
+      }
+    }
+    comments {
+      data {
+        id
+        body
+        created_at
+      }
+    }
+    favorites {
+      data {
+        id
+        ad {
+          id
+          title
+          price
+          created_at
+          attachments {
+            data {
+              id
+              path
+              attachable_id
+              attachable_type
+              type
+              disk_name
+              file_name
+              thumbnail
+            }
+          }
+          user {
+            id
+            name
+            state {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

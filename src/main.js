@@ -7,7 +7,7 @@
 global.jQuery = require('jquery');
 var $ = global.jQuery;
 window.$ = $;
-
+import store from "./store"
 import Vue from 'vue'
 import App from './App.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -69,12 +69,25 @@ const router = new VueRouter({
   routes
 });
 // Routes End
+router.beforeEach((to, from, next) => {
+  let user = localStorage.getItem("user");
 
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (user) {
+      next();
+    }
+    else {
+      next({ path: '/login' });
+    }
+  }
+  next();
+
+})
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+* Next, we will create a fresh Vue application instance and attach it to
+* the page. Then, you may begin adding components to this application
+* or customize the JavaScript scaffolding to fit your unique needs.
+*/
 
 // Components
 Vue.component('pagination', require('laravel-vue-pagination'));
@@ -117,6 +130,6 @@ Vue.config.productionTip = false
 
 new Vue({
   apolloProvider: createProvider(),
-  router,
+  router, store,
   render: h => h(App),
 }).$mount('#app')

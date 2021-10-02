@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import store from "../../../store/Auth";
 import Taxonomies from "../../../graphql/queries/taxonomies/taxonomyContent.gql";
 import RetrieveTaxonomies from "../../../graphql/mutation/taxonomies/retrieveTaxonomies.gql";
 import { Form } from "vform";
@@ -98,6 +99,13 @@ export default {
         brand: null,
       }),
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     types: {

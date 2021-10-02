@@ -178,6 +178,7 @@
 </template>
 
 <script>
+import store from "../../store/Auth";
 import createType from "../../graphql/mutation/taxonomies/createTaxon.gql";
 import Taxonomies from "../../graphql/queries/taxonomies/taxonomyContent.gql";
 import updateModel from "../../graphql/mutation/taxonomies/updateTaxon.gql";
@@ -200,6 +201,13 @@ export default {
         model: null,
       }),
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     models: {

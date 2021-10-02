@@ -55,7 +55,6 @@
                   </tbody>
                 </table>
               </div>
-       
             </div>
             <!-- /.card -->
           </div>
@@ -174,6 +173,7 @@ import createHaraj from "../../graphql/mutation/taxonomies/harajs.gql";
 import updateHaraj from "../../graphql/mutation/taxonomies/updateHaraj.gql";
 import deleteHaraj from "../../graphql/mutation/taxonomies/deleteTaxon.gql";
 import Harajs from "../../graphql/queries/taxonomies/taxonomyContent.gql";
+import store from "../../store/Auth";
 
 export default {
   data() {
@@ -191,6 +191,13 @@ export default {
         icon: "",
       }),
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     harajs: {
