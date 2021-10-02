@@ -17,7 +17,7 @@
               <div class="text-center">
                 <img :src="logo" alt="" height="150" width="150" />
               </div>
-              <div class="list-group rounded-0">
+              <div class="list-group rounded-0" v-if="user">
                 <router-link
                   class="list-group-item list-group-item-action border-0 align-items-center"
                   to="/"
@@ -225,6 +225,7 @@ import CurrnetUser from "./graphql/currentUser.gql";
 import { mapActions } from "vuex";
 import Logo from "./assets/images/logo.png";
 import LoadingIcon from "./components/LoadingIcon.vue";
+import { mapGetters } from "vuex";
 const userDetails = CurrnetUser;
 
 global.jQuery = require("jquery");
@@ -263,6 +264,11 @@ export default {
         return data;
       },
     },
+  },
+  computed: {
+    ...mapGetters({
+      user: "Auth/user",
+    }),
   },
   created() {
     $(document).ready(() => {
