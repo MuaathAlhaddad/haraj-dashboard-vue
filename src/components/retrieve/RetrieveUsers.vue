@@ -81,6 +81,7 @@ import LoadingIcon from "../LoadingIcon.vue";
 import Users from "../../graphql/queries/retrievedUsers.gql";
 import Cities from "../../graphql/queries/cities.gql";
 import RetrieveUser from "../../graphql/mutation/users/retrieveUser.gql";
+import store from "../../store/Auth";
 
 export default {
   components: { SearchUsers, LoadingIcon },
@@ -112,6 +113,13 @@ export default {
         phone_verified_at: "",
       }),
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     users: {

@@ -300,6 +300,8 @@ import UpdateUser from "../graphql/mutation/users/updateUser.gql";
 import Cities from "../graphql/queries/cities.gql";
 import DeleteUser from "../graphql/mutation/users/deleteUser.gql";
 import { validationMixin } from "vuelidate";
+import store from "../store/Auth";
+
 import {
   required,
   minLength,
@@ -369,6 +371,13 @@ export default {
         phone_verified_at: "",
       }),
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     users: {

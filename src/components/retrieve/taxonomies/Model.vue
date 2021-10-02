@@ -67,7 +67,14 @@
 <script>
 import Taxonomies from "../../../graphql/queries/taxonomies/taxonomyContent.gql";
 import RetrieveBrand from "../../../graphql/mutation/taxonomies/retrieveTaxonomies.gql";
-export default {
+import store from "../../../store/Auth";
+export default {  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
+  },
   data() {
     return {
       editmode: false,

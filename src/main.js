@@ -4,10 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// global.jQuery = require('jquery');
-// let $ = global.jQuery;
-// window.$ = $;
 
+import store from "./store"
 import Vue from 'vue'
 import App from './App.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -69,12 +67,25 @@ const router = new VueRouter({
   routes
 });
 // Routes End
+router.beforeEach((to, from, next) => {
+  let user = localStorage.getItem("user");
 
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (user) {
+      next();
+    }
+    else {
+      next({ path: '/login' });
+    }
+  }
+  next();
+
+})
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+* Next, we will create a fresh Vue application instance and attach it to
+* the page. Then, you may begin adding components to this application
+* or customize the JavaScript scaffolding to fit your unique needs.
+*/
 
 // Components
 Vue.component('pagination', require('laravel-vue-pagination'));
@@ -90,6 +101,11 @@ Vue.component('dashboard', require('./components/Dashboard.vue'));
 //   require('./components/passport/AuthorizedClients.vue').default
 // );
 
+// Vue.component(
+//   'passport-authorized-clients',
+//   require('./components/passport/AuthorizedClients.vue').default
+// );
+//
 // Vue.component(
 //   'passport-personal-access-tokens',
 //   require('./components/passport/PersonalAccessTokens.vue').default
@@ -117,6 +133,6 @@ Vue.config.productionTip = false
 
 new Vue({
   apolloProvider: createProvider(),
-  router,
+  router, store,
   render: h => h(App),
 }).$mount('#app')

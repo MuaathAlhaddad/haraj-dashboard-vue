@@ -116,6 +116,8 @@
 </template>
 
 <script>
+import store from "../../store/Auth";
+
 export default {
   data() {
     return {
@@ -128,6 +130,13 @@ export default {
         description: "",
       }),
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   methods: {},
   mounted() {},

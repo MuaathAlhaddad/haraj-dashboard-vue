@@ -1,0 +1,7 @@
+mutation($email: String!, $password: String!) {
+  loginAdmin(input: { email: $email, password: $password }) {
+    access_token
+    token_type
+    isAdmin
+  }
+}

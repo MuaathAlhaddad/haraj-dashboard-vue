@@ -54,7 +54,7 @@
           <!-- /.card -->
         </div>
       </div>
-<!-- 
+      <!-- 
       <div v-if="!$gate.isAdmin()">
         <not-found></not-found>
       </div> -->
@@ -127,6 +127,8 @@
 </template>
 
 <script>
+import store from "../../store/Auth";
+
 export default {
   data() {
     return {
@@ -138,6 +140,13 @@ export default {
         name: "",
       }),
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   methods: {
     getResults(page = 1) {

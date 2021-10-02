@@ -168,18 +168,47 @@
 </template>
 
 <script>
+import CurrnetUser from "./graphql/currentUser.gql";
+import { mapActions } from "vuex";
+import LoadingIcon from "./components/LoadingIcon.vue";
+const userDetails = CurrnetUser;
 
 global.jQuery = require('jquery');
 let $ = global.jQuery;
 window.$ = $;
-
 export default {
+  components: { LoadingIcon },
   name: "App",
   data() {
     return {
       active: false,
-      logo: './src/assets/images/logo.png'
+      logo: './src/assets/images/logo.png',
+      loading: 0,
+      skiped: true,
+      userId: null
     };
+  },
+  methods: {
+    ...mapActions({
+      currentUser: "Auth/currentUser",
+    }),
+  },
+  apollo: {
+    currentUserDetails: {
+      query: userDetails,
+      loadingKey: "loading",
+
+      update(data) {
+        if (data.currentUser == null) {
+          return this.currentUser(null);
+        }
+
+        this.currentUser(data.currentUser);
+        this.userId = data.currentUser.id;
+        this.skiped = false;
+        return data;
+      },
+    },
   },
   created() {
     $(document).ready(() => {

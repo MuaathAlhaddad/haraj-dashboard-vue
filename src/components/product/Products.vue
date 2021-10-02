@@ -280,6 +280,7 @@ import Models from "../../graphql/queries/taxonomies/models.gql";
 import Years from "../../graphql/queries/taxonomies/years.gql";
 import Cities from "../../graphql/queries/cities.gql";
 import VueUploadMultipleImage from "vue-upload-multiple-image";
+import store from "../../store/Auth";
 
 ///Validation
 import { validationMixin } from "vuelidate";
@@ -377,6 +378,13 @@ export default {
       autocompleteItems: [],
       filters: [],
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     harajs: {
@@ -628,7 +636,7 @@ export default {
     updateAd() {
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
-        return;
+        console.log("there is an error");
       }
       if (this.fileList !== null) {
         for (let index = 0; index < this.fileList.length; index++) {

@@ -168,6 +168,7 @@ import createBrand from "../../graphql/mutation/taxonomies/createTaxon.gql";
 import Taxonomies from "../../graphql/queries/taxonomies/taxonomyContent.gql";
 import updateBrand from "../../graphql/mutation/taxonomies/updateTaxon.gql";
 import deleteBrand from "../../graphql/mutation/taxonomies/deleteTaxon.gql";
+import store from "../../store/Auth";
 
 export default {
   data() {
@@ -186,6 +187,13 @@ export default {
         haraj: null,
       }),
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     harajs: {

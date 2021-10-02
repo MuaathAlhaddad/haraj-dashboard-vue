@@ -66,6 +66,7 @@
 <script>
 import Taxonomies from "../../../graphql/queries/taxonomies/taxonomyContent.gql";
 import RetrieveBrand from "../../../graphql/mutation/taxonomies/retrieveTaxonomies.gql";
+import store from "../../../store/Auth";
 
 export default {
   data() {
@@ -84,6 +85,12 @@ export default {
         haraj: null,
       }),
     };
+  },  beforeRouteEnter(to, from, next) {
+    if (store.state.authStatus) {
+      next();
+    } else {
+      next("login");
+    }
   },
   apollo: {
     harajs: {
