@@ -189,22 +189,15 @@
                   <span class="fas fa-list text-primary h3"></span>
                 </button>
                 <div class="dropdown ml-auto">
-                  <button
-                    id="logout-dropdown"
-                    aria-expanded="false"
-                    class="btn py-0 d-flex align-items-center"
-                    data-toggle="dropdown"
-                  >
-                    <span class="bi bi-person text-primary h4"></span>
-                    <span class="bi bi-chevron-down ml-1 mb-2 small"></span>
-                  </button>
-                  <div
-                    aria-labelledby="logout-dropdown"
-                    class="dropdown-menu dropdown-menu-right border-0 shadow-sm"
-                  >
-                    <a class="dropdown-item" href="#">Logout</a>
-                    <a class="dropdown-item" href="#">Settings</a>
-                  </div>
+                  <b-dropdown dropleft no-caret toggle-class="text-decoration-none" variant="link">
+                    <template #button-content>
+                      <i class="fas fa-user h4"></i>
+                    </template>
+                    <b-dropdown-item href="#">
+                      <i class="fas fa-sign-out-alt"></i>
+                      Logout
+                    </b-dropdown-item>
+                  </b-dropdown>
                 </div>
               </nav>
 
