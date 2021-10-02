@@ -138,15 +138,11 @@ export default {
             })
             .then(() => {
               // eslint-disable-next-line no-undef
-              $("#addNew").modal("hide");
-
-              // eslint-disable-next-line no-undef
               Toast.fire({
                 icon: "success",
                 title: "Brand has been Retrieved!!",
               });
 
-              this.$Progress.finish();
               this.$apollo.queries.brands.refetch();
             })
             .catch((errors) => {

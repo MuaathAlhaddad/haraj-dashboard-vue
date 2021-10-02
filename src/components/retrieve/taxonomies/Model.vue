@@ -144,15 +144,10 @@ export default {
             })
             .then(() => {
               // eslint-disable-next-line no-undef
-              $("#addNew").modal("hide");
-
-              // eslint-disable-next-line no-undef
               Toast.fire({
                 icon: "success",
                 title: "Model has been Retrieved!!",
               });
-
-              this.$Progress.finish();
               this.$apollo.queries.models.refetch();
             })
             .catch((errors) => {

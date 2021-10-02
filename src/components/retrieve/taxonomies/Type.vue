@@ -68,7 +68,6 @@
 import Taxonomies from "../../../graphql/queries/taxonomies/taxonomyContent.gql";
 import RetrieveTaxonomies from "../../../graphql/mutation/taxonomies/retrieveTaxonomies.gql";
 import { Form } from "vform";
-import $ from "jquery";
 import Swal from "sweetalert2";
 
 const Toast = Swal.mixin({
@@ -155,14 +154,11 @@ export default {
               },
             })
             .then(() => {
-              $("#addNew").modal("hide");
-
               Toast.fire({
                 icon: "success",
                 title: "Type has been Retrieved!!",
               });
 
-              this.$Progress.finish();
               this.$apollo.queries.types.refetch();
             })
             .catch((errors) => {
