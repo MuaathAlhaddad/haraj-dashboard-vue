@@ -1,14 +1,14 @@
 query {
-    users(orderBy: { column: CREATED_AT, order: DESC }) {
-        data {
-            id
-            name
-            email
-            created_at
-            phone_no
-            gender
-            phone_verified_at
-            email_verified_at
-        }
+  users(first: 10000000, orderBy: { column: CREATED_AT, order: DESC }) {
+    data {
+      id
+      name
+      email
+      created_at
+      phone_no
+      gender
+      phone_verified_at
+      email_verified_at
     }
+  }
 }

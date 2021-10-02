@@ -218,6 +218,7 @@ import CurrnetUser from "./graphql/currentUser.gql";
 import { mapActions } from "vuex";
 import Logo from "./assets/images/logo.png";
 import LoadingIcon from "./components/LoadingIcon.vue";
+import Ads from "./graphql/queries/ads.gql";
 import { mapGetters } from "vuex";
 const userDetails = CurrnetUser;
 
@@ -254,6 +255,15 @@ export default {
         this.currentUser(data.currentUser);
         this.userId = data.currentUser.id;
         this.skiped = false;
+        return data;
+      },
+    },
+    ads: {
+      query: Ads,
+      loadingKey: "loading",
+
+      update(data) {
+        console.log(data.ads.data.length);
         return data;
       },
     },
