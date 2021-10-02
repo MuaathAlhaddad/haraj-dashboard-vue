@@ -223,6 +223,7 @@
 <script>
 import CurrnetUser from "./graphql/currentUser.gql";
 import { mapActions } from "vuex";
+import Logo from "./assets/images/logo.png";
 import LoadingIcon from "./components/LoadingIcon.vue";
 const userDetails = CurrnetUser;
 
@@ -235,7 +236,7 @@ export default {
   data() {
     return {
       active: false,
-      logo: "./src/assets/images/logo.png",
+      logo: Logo,
       loading: 0,
       skiped: true,
       userId: null,
