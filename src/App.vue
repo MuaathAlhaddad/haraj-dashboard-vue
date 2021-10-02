@@ -188,12 +188,17 @@
                 <button id="open-sidebar" class="btn py-0 d-lg-none">
                   <span class="fas fa-list text-primary h3"></span>
                 </button>
-                <div class="dropdown ml-auto">
-                  <b-dropdown dropleft no-caret toggle-class="text-decoration-none" variant="link">
+                <div class="dropdown ml-auto" v-if="user">
+                  <b-dropdown
+                    dropleft
+                    no-caret
+                    toggle-class="text-decoration-none"
+                    variant="link"
+                  >
                     <template #button-content>
                       <i class="fas fa-user h4"></i>
                     </template>
-                    <b-dropdown-item href="#">
+                    <b-dropdown-item @click="logoutUser()">
                       <i class="fas fa-sign-out-alt"></i>
                       Logout
                     </b-dropdown-item>
@@ -238,6 +243,12 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      logout: "Auth/logout",
+    }),
+    logoutUser() {
+      this.logout();
+    },
     ...mapActions({
       currentUser: "Auth/currentUser",
     }),
