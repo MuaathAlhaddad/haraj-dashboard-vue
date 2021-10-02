@@ -7,19 +7,19 @@
             ><h4 class="titleAd">Login</h4>
             <hr />
             <b-form>
-              <!-- <alert-erorr :message="errorMessage" v-if="alert" /> -->
+              <AlertErorr :message="errorMessage" v-if="alert" />
               <b-col class="my-2 reg-form" cols="12">
-                <b-form-group id="phone_no" label="Phone" label-for="phone_no">
+                <b-form-group id="email" label="Phone" label-for="email">
                   <b-input-group class="mb-2">
                     <b-input-group-prepend is-text>
-                      +60
+                      <b-icon icon="envelope-fill"></b-icon>
                     </b-input-group-prepend>
                     <b-form-input
-                      id="phone_no"
-                      name="phone_no"
-                      type="number"
-                      v-model="$v.form.phone_no.$model"
-                      :state="validateState('phone_no')"
+                      id="email"
+                      name="email"
+                      type="text"
+                      v-model="$v.form.email.$model"
+                      :state="validateState('email')"
                       aria-describedby="input-1-live-feedback"
                     >
                     </b-form-input>
@@ -76,18 +76,19 @@
 import { mapActions, mapGetters } from "vuex";
 import Login from "../../graphql/login.gql";
 import { validationMixin } from "vuelidate";
-import { required, minLength } from "vuelidate/lib/validators";
-// import AlertErorr from "../../components/AlertErorr.vue";
+import { required, minLength, email } from "vuelidate/lib/validators";
+import AlertErorr from "../../components/AlertError.vue";
 
 export default {
   mixins: [validationMixin],
   components: {
-    // AlertErorr,
+    AlertErorr,
   },
   validations: {
     form: {
-      phone_no: {
+      email: {
         required,
+        email,
         minLength: minLength(5),
       },
 
@@ -100,7 +101,7 @@ export default {
   data() {
     return {
       form: {
-        phone_no: null,
+        email: null,
         password: null,
         loading: 0,
       },
@@ -122,15 +123,22 @@ export default {
         .mutate({
           mutation: Login,
           variables: {
-            phone_no: this.form.phone_no,
+            email: this.form.email,
             password: this.form.password,
           },
         })
         .then((data) => {
-          this.login(data.data.login.access_token);
-          this.$router.push("/");
+          if (!data.data.loginAdmin.isAdmin) {
+            this.errorMessage = "You do not have a permission access!";
+            this.alert = true;
+          }
+          if (data.data.loginAdmin.isAdmin) {
+            this.login(data.data.loginAdmin.access_token);
+            this.$router.push("/");
+          }
         })
         .catch((errors) => {
+          console.log(errors);
           let { graphQLErrors } = errors;
           if (graphQLErrors[0].extensions.category === "graphql") {
             this.errorMessage = " Invalid credentials!!";

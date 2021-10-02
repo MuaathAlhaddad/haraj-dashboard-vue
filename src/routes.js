@@ -1,7 +1,7 @@
 export default [
     {
         path: '/login',
-        component: require('./components/auth/signIn.vue').default
+        component: require('./components/auth/SignIn.vue').default
     },
     {
         path: '/dashboard', component: require('./components/Dashboard.vue').default,

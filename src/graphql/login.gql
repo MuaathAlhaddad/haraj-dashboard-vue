@@ -1,6 +1,7 @@
-mutation($phone_no: String!, $password: String!) {
-  login(input: { phone_no: $phone_no, password: $password }) {
+mutation($email: String!, $password: String!) {
+  loginAdmin(input: { email: $email, password: $password }) {
     access_token
     token_type
+    isAdmin
   }
 }
