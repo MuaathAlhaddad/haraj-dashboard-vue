@@ -113,7 +113,7 @@ export default {
       loadingKey: "loading",
       variables: {
         id: 3,
-        trashed: "WITHOUT",
+        trashed: "ONLY",
       },
       update(data) {
         console.log(data);
@@ -126,7 +126,7 @@ export default {
       loadingKey: "loading",
       variables: {
         id: 2,
-        trashed: "WITHOUT",
+        trashed: "ONLY",
       },
       update(data) {
         this.BrandsArray = data.taxonomyContents.data.map(function(obj) {

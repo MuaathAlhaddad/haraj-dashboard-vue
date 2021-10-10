@@ -68,7 +68,8 @@
 import Taxonomies from "../../../graphql/queries/taxonomies/taxonomyContent.gql";
 import RetrieveBrand from "../../../graphql/mutation/taxonomies/retrieveTaxonomies.gql";
 import store from "../../../store/Auth";
-export default {  beforeRouteEnter(to, from, next) {
+export default {
+  beforeRouteEnter(to, from, next) {
     if (store.state.authStatus) {
       next();
     } else {
@@ -99,7 +100,7 @@ export default {  beforeRouteEnter(to, from, next) {
       loadingKey: "loading",
       variables: {
         id: 4,
-        trashed: "WITHOUT",
+        trashed: "ONLY",
       },
       update(data) {
         console.log(data);
@@ -112,7 +113,7 @@ export default {  beforeRouteEnter(to, from, next) {
       loadingKey: "loading",
       variables: {
         id: 3,
-        trashed: "WITHOUT",
+        trashed: "ONLY",
       },
       update(data) {
         var finalTypes = data.taxonomyContents.data.map(function(obj) {
