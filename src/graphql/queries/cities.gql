@@ -1,9 +1,10 @@
 query {
-    country(id: 201) {
-        name
-        states {
-            name
-            id
-        }
+  country(id: 201) {
+    id
+    name
+    states {
+      name
+      id
     }
+  }
 }

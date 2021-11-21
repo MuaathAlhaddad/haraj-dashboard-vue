@@ -636,7 +636,7 @@ export default {
     updateAd() {
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
-        console.log("there is an error");
+        console.log("");
       }
       if (this.fileList !== null) {
         for (let index = 0; index < this.fileList.length; index++) {
