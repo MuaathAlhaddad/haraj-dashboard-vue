@@ -346,6 +346,9 @@ export default {
       brands: [],
       models: [],
       photos: [],
+      deleteIds: [],
+      adDetails: null,
+
       // eslint-disable-next-line no-undef
       form: new Form({
         id: "",
@@ -523,6 +526,8 @@ export default {
     },
 
     editAd(ad) {
+      console.log(ad);
+      this.adDetails = ad;
       this.userId = ad.id;
       this.create_updateSwitcher = true;
       this.editmode = true;
@@ -651,68 +656,79 @@ export default {
       }
 
       if (this.photos.length == 0) {
-        this.alert = true;
-        // eslint-disable-next-line no-undef
-        return Swal.fire(
-          "Failed!",
-          "You have to upload images for your post",
-          "warning"
-        );
-      } else {
-        // this.form.taxonomyContents = [];
-        // if (this.form.category != null) {
-        //     const category = this.harajs.taxonomyContents.data.find(
-        //         element => element.title == this.form.category
-        //     );
-        //     this.form.taxonomyContents.push(category.id);
-        // }
-        // if (this.form.brand != null) {
-        //     const brand = this.brandsObjects.level1.children.find(
-        //         element => element.title == this.form.brand
-        //     );
-        //     this.form.taxonomyContents.push(brand.id);
-        // }
-        // if (this.form.model != null) {
-        //     const model = this.modelsObjects.level2.children.find(
-        //         element => element.title == this.form.model
-        //     );
-        //     this.form.taxonomyContents.push(model.id);
-        // }
-        // if (this.form.year != null) {
-        //     const year = this.yearsObjects.taxonomyContents.data.find(
-        //         element => element.title == this.form.year
-        //     );
-        //     this.form.taxonomyContents.push(year.id);
-        // }
+        this.adDetails.attachments.data.map((att) => {
+          this.deleteIds.push(att.id);
+        });
+        let photos = this.adDetails.attachments.data;
+        photos.forEach(function(photo) {
+          delete photo.attachable_id;
+          delete photo.id;
+          delete photo.type;
+        });
+        let arrayPhotos = [];
+        JSON.parse(JSON.stringify(photos)).map((photo) => {
+          let tempPhoto = new Object();
+          tempPhoto.file_name = photo.file_name;
+          tempPhoto.path = photo.path;
+          tempPhoto.type = "PHOTO";
+          tempPhoto.disk_name = "";
+          tempPhoto.thumbnail = false;
+          arrayPhotos.push(tempPhoto);
+        });
         this.$apollo
           .mutate({
             // Query
             mutation: UpdateAd,
             // Parameters
             variables: {
-              id: this.userId,
+              adId: this.adDetails.id,
+              title: this.form.title,
+              description: this.form.description,
+              price: parseFloat(this.form.price),
+              photos: arrayPhotos,
+              deletePhotos: this.deleteIds,
+            },
+          })
+          // eslint-disable-next-line no-unused-vars
+          .then(() => {
+            this.alert = true;
+            // eslint-disable-next-line no-undef
+            return Swal.fire(
+              "Done Successfully!",
+              "You have update your ad!",
+              "success"
+            );
+          })
+          .catch((errors) => {
+            console.log(errors);
+          });
+      } else {
+        this.adDetails.attachments.data.map((att) => {
+          this.deleteIds.push(att.id);
+        });
+        this.$apollo
+          .mutate({
+            // Query
+            mutation: UpdateAd,
+            // Parameters
+            variables: {
+              adId: this.adDetails.id,
               title: this.form.title,
               description: this.form.description,
               price: parseFloat(this.form.price),
               photos: this.photos,
+              deletePhotos: this.deleteIds,
             },
           })
           // eslint-disable-next-line no-unused-vars
           .then((data) => {
-            this.$bvModal
-              .msgBoxOk("Done Successfully", {
-                title: "Well Done!",
-                size: "sm",
-                buttonSize: "sm",
-                okVariant: "success",
-                headerClass: "p-2 border-bottom-0",
-                footerClass: "p-2 border-top-0",
-                centered: true,
-              })
-              .then((value) => {
-                this.boxTwo = value;
-              })
-              .catch(() => {});
+            this.alert = true;
+            // eslint-disable-next-line no-undef
+            Swal.fire(
+              "Done Successfully!",
+              "You have update your ad!",
+              "success"
+            );
             this.$apollo.queries.ads.refetch();
             this.create_updateSwitcher = false;
           })

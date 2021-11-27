@@ -1,22 +1,29 @@
 mutation(
-    $id: ID!
-    $title: String!
-    $description: String!
-    $price: Float!
-    $photos: [CreateAttachmentHasManyInputs]!
+  $adId: ID!
+  $title: String!
+  $description: String!
+  $price: Float!
+  $photos: [CreateAttachmentHasManyInputs]!
+  $deletePhotos: [ID!]
 ) {
-    updateAd(
-        id: $id
-        input: {
-            title: $title
-            description: $description
-            price: $price
-            attachments: { connect: [12], create: $photos }
-        }
-    ) {
-        id
-        title
-        description
-        price
+  updateAd(
+    id: $adId
+    input: {
+      title: $title
+      description: $description
+      price: $price
+      attachments: { delete: $deletePhotos, create: $photos }
     }
+  ) {
+    id
+    title
+    description
+    price
+    attachments {
+      data {
+        id
+        path
+      }
+    }
+  }
 }
