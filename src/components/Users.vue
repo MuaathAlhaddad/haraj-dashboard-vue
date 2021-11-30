@@ -489,7 +489,7 @@ export default {
           mutation: UpdateUser,
           variables: {
             name: this.form.name,
-            userId: 1,
+            userId: this.form.id,
             email: this.form.email,
             password: this.form.password,
             gender: this.form.gender,
